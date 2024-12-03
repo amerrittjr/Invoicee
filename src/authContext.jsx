@@ -4,27 +4,12 @@ import { Client, Account } from "appwrite";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  let [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const client = new Client();
   client
-    .setEndpoint("https://cloud.appwrite.io/v1")
-    .setProject("674e187b000f402272bd");
-
-  const account = new Account(client);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await account.get();
-        setIsAuthenticated(true);
-      } catch (error) {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
+    .setEndpoint(process.env.REACT_APP_APPWRITE_ENDPOINT)
+    .setProject(process.env.REACT_APP_APPWRITE_PROJECT_ID);
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>

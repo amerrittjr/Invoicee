@@ -1,0 +1,107 @@
+.invoice-builder {
+  text-align: center;
+  margin: 50px;
+  font-family: "Arial", sans-serif;
+}
+
+.invoice-builder h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.step-container {
+  display: flex;
+  overflow: hidden;
+  height: 150px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.step-box {
+  position: absolute;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.step-box.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.step-box.completed {
+  opacity: 0.5;
+  transform: translateX(-100%);
+}
+
+.input-bubble {
+  border: 2px solid #007bff;
+  border-radius: 25px;
+  padding: 15px;
+  margin: 10px 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.input-bubble input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+}
+
+.button-container {
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.invoice-preview {
+  width: 8.5in; /* Standard letter size width */
+  height: 11in; /* Standard letter size height */
+  padding: 1in; /* Padding to simulate margins */
+  border: 1px solid #000; /* Border to simulate the edge of the paper */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for a 3D effect */
+  background-color: #fff; /* White background */
+  margin: 0 auto; /* Center the invoice */
+  text-align: left; /* Left-align text */
+}
+
+.invoice-preview h2 {
+  text-align: center; /* Center the title */
+  margin-bottom: 20px; /* Space below the title */
+}
+
+.invoice-preview p {
+  margin: 10px 0; /* Space between paragraphs */
+}
+
+.invoice-preview strong {
+  display: inline-block;
+  width: 150px; /* Fixed width for labels */
+}
+
+.debug-data {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left;
+}

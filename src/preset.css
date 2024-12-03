@@ -1,0 +1,136 @@
+/* Reset / Normalize Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Default base size for rem calculations */
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem; /* Base font size */
+  line-height: 1.6;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+/* Root Variables for Theming */
+:root {
+  /* Colors */
+  --primary-color: #007bff;
+  --secondary-color: #6c757d;
+  --background-color: #f8f9fa;
+  --text-color: #343a40;
+  --link-color: #0056b3;
+  --error-color: #dc3545;
+
+  /* Font Sizes */
+  --font-size-small: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-large: 1.25rem;
+  --font-size-xlarge: 1.5rem;
+
+  /* Spacing */
+  --spacing-small: 8px;
+  --spacing-base: 16px;
+  --spacing-large: 24px;
+  --spacing-xlarge: 32px;
+
+  /* Borders */
+  --border-radius: 4px;
+
+  /* Shadows */
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography Defaults */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-color);
+  margin-bottom: var(--spacing-base);
+}
+
+p {
+  margin-bottom: var(--spacing-base);
+}
+
+a {
+  text-decoration: none;
+  color: var(--link-color);
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+/* Button Defaults */
+button {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-small) var(--spacing-large);
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: darken(var(--primary-color), 10%);
+}
+
+/* Input Fields */
+input,
+textarea {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-small);
+  border: 1px solid var(--secondary-color);
+  border-radius: var(--border-radius);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+/* Containers */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-base);
+}
+
+/* Responsive Typography */
+html {
+  font-size: clamp(15px, 1.5vw, 18px);
+}
+
+/* Utilities */
+.hidden {
+  display: none;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-2 {
+  margin-top: var(--spacing-small);
+}
+.mb-4 {
+  margin-bottom: var(--spacing-large);
+}

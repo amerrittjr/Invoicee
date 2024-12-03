@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Client, Account } from "appwrite";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "./authContext";
 
 const LoginPage = () => {
@@ -10,8 +10,8 @@ const LoginPage = () => {
 
   const client = new Client();
   client
-    .setEndpoint("https://cloud.appwrite.io/v1") // Your Appwrite endpoint
-    .setProject("674e187b000f402272bd"); // Your project ID
+    .setEndpoint(process.env.REACT_APP_APPWRITE_ENDPOINT)
+    .setProject(process.env.REACT_APP_APPWRITE_PROJECT_ID);
 
   const account = new Account(client);
 
@@ -21,12 +21,18 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await account.createSession(user.email, user.password);
+      const response = await account.createEmailPasswordSession(
+        user.email,
+        user.password
+      );
+
+      console.log("session created:", response);
       setIsAuthenticated(true);
-      navigate("/dashboard"); // Redirect to the dashboard after login
+      navigate("/dashboard");
     } catch (error) {
-      console.error("Error logging in", error);
+      console.log("error:", error);
     }
   };
 
@@ -52,6 +58,14 @@ const LoginPage = () => {
         />
         <button type="submit">Login</button>
       </form>
+
+      <div>
+        <Link to="/signUp">
+          <button>
+            <h3>click here to go to sign-up page</h3>
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };

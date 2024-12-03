@@ -3,28 +3,26 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./authContext";
 import "./index.css";
+import "./preset.css";
 import SignUpForm from "./signUpForm";
-import UserList from "./UserList";
 import LoginPage from "./loginPage";
-import Dashboard from "./dashboard";
-import ProtectedRoute from "./protectedRoute";
+import Dashboard from "./dashboard"; // Import the new Dashboard component
+import InvoiceBuilder from "./invoiceBuilder";
+import Navbar from "./nav";
+import LandingPage from "./landingPage";
 
 const App = () => {
   return (
     <AuthProvider>
       <Router>
+        <Navbar />
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/" element={<UserList />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/dashboard" element={<Dashboard />} />{" "}
+          <Route path="/invoiceBuilder" element={<InvoiceBuilder />} />
+          {/* Add the new Dashboard route */}
         </Routes>
       </Router>
     </AuthProvider>
