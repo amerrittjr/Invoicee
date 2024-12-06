@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BACKEND_API_URL = "http://localhost:5000/generate-invoice";
+const BACKEND_API_URL = process.env.REACT_APP_BACKEND_API_URL;
 
-export const generateInvoice = (invoiceData) => {
+export const generateInvoice = async (invoiceData) => {
   if (!invoiceData?.items?.length || !invoiceData?.to) {
     throw new Error(
       "Invalid invoice data: must include items and customer information"
@@ -10,13 +10,14 @@ export const generateInvoice = (invoiceData) => {
   }
 
   try {
-    const response = axios.post(BACKEND_API_URL, invoiceData, {
+    const response = await axios.post(BACKEND_API_URL, invoiceData, {
       responseType: "blob",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
+    // Create download link for PDF
     const blob = new Blob([response.data], { type: "application/pdf" });
     return {
       success: true,
@@ -26,7 +27,7 @@ export const generateInvoice = (invoiceData) => {
   } catch (error) {
     const errorMessage =
       error.response?.data instanceof Blob
-        ? error.response.data.text()
+        ? await error.response.data.text()
         : error.message;
 
     throw new Error(`Invoice generation failed: ${errorMessage}`);

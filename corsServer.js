@@ -2,11 +2,10 @@ import express from "express";
 import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
-
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const INVOICE_API_URL = process.env.REACT_APP_INVOICE_API_URL;
 const API_KEY = process.env.REACT_APP_INVOICE_MAKER_API_KEY;
 
