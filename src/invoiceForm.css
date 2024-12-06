@@ -1,0 +1,100 @@
+.invoice-form {
+  width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.field-group {
+  margin-bottom: 10px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.field-group input,
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.field-group input:focus,
+textarea:focus {
+  outline: none;
+  border-bottom: 1px solid #007bff;
+}
+
+.two-column {
+  display: flex;
+  justify-content: space-between;
+}
+
+.two-column .field-group {
+  width: 48%;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+.items {
+  margin-bottom: 20px;
+}
+
+.items div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.items input {
+  margin-right: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.items input:focus {
+  outline: none;
+  border-bottom: 1px solid #007bff;
+}
+
+button {
+  padding: 10px 20px;
+  margin-right: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

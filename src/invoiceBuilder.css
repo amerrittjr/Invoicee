@@ -84,17 +84,17 @@ button:hover {
 }
 
 .invoice-preview h2 {
-  text-align: center; /* Center the title */
-  margin-bottom: 20px; /* Space below the title */
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .invoice-preview p {
-  margin: 10px 0; /* Space between paragraphs */
+  margin: 10px 0;
 }
 
 .invoice-preview strong {
   display: inline-block;
-  width: 150px; /* Fixed width for labels */
+  width: 150px;
 }
 
 .debug-data {

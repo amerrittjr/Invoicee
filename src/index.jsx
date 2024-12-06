@@ -6,10 +6,10 @@ import "./index.css";
 import "./preset.css";
 import SignUpForm from "./signUpForm";
 import LoginPage from "./loginPage";
-import Dashboard from "./dashboard"; // Import the new Dashboard component
-import InvoiceBuilder from "./invoiceBuilder";
+import Dashboard from "./dashboard";
 import Navbar from "./nav";
 import LandingPage from "./landingPage";
+import InvoiceForm from "./invoiceForm";
 
 const App = () => {
   return (
@@ -20,9 +20,9 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpForm />} />
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          <Route path="/invoiceBuilder" element={<InvoiceBuilder />} />
-          {/* Add the new Dashboard route */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/invoiceForm" element={<InvoiceForm />} />
+          {}
         </Routes>
       </Router>
     </AuthProvider>
