@@ -38,9 +38,9 @@ const InvoiceForm = () => {
     setFormData((prev) => ({ ...prev, items: updatedItems }));
   };
 
-  const handleGenerateInvoice = () => {
+  const handleGenerateInvoice = async () => {
     try {
-      const { downloadUrl } = generateInvoice(formData);
+      const { downloadUrl } = await generateInvoice(formData);
       const link = document.createElement("a");
       link.href = downloadUrl;
       link.setAttribute("download", "invoice.pdf");

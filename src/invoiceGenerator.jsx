@@ -10,21 +10,35 @@ export const generateInvoice = async (invoiceData) => {
   }
 
   try {
+    // Send POST request
     const response = await axios.post(BACKEND_API_URL, invoiceData, {
-      responseType: "blob",
+      responseType: "blob", // Ensure binary response for PDFs
       headers: {
         "Content-Type": "application/json",
       },
     });
 
-    // Create download link for PDF
+    // Check if the response data is valid
+    if (!response.data) {
+      console.log("no data entered");
+      throw new Error("No data received from the server");
+    }
+
+    // Create a Blob for the PDF file
     const blob = new Blob([response.data], { type: "application/pdf" });
+    console.log(blob);
+
+    // Create a temporary download link
+    const downloadUrl = URL.createObjectURL(blob);
     return {
       success: true,
       data: blob,
-      downloadUrl: URL.createObjectURL(blob),
+      downloadUrl,
     };
   } catch (error) {
+    // Log full error for debugging
+    console.error("Error generating invoice:", error);
+
     const errorMessage =
       error.response?.data instanceof Blob
         ? await error.response.data.text()
