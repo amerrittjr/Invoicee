@@ -9,7 +9,11 @@ import LoginPage from "./loginPage";
 import Dashboard from "./dashboard";
 import Navbar from "./nav";
 import LandingPage from "./landingPage";
-import InvoiceForm from "./invoiceForm";
+import InvoiceForm from "./invoiceForm"; // Updated path
+import InvoiceDash from "./invoiceDashHome"; // Updated path
+import CalendarDash from "./calendarDash";
+import PlannerDash from "./plannerDash";
+import TaskDash from "./taskDash";
 
 const App = () => {
   return (
@@ -21,8 +25,11 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/invoice" element={<InvoiceDash />} />
+          <Route path="/calendar" element={<CalendarDash />} />
           <Route path="/invoiceForm" element={<InvoiceForm />} />
-          {}
+          <Route path="/planner" element={<PlannerDash />} />
+          <Route path="/tasks" element={<TaskDash />} />
         </Routes>
       </Router>
     </AuthProvider>
