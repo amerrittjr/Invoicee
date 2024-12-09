@@ -1,0 +1,35 @@
+.invoice-list {
+  margin-top: 20px;
+}
+
+.invoice-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.invoice-info p {
+  margin: 0;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.status-button {
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
+
+.status-button.paid {
+  background-color: green;
+}
+
+.status-button.unpaid {
+  background-color: red;
+}
