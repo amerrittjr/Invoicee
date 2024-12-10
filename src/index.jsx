@@ -10,6 +10,7 @@ import Dashboard from "./dashboard";
 import Navbar from "./nav";
 import LandingPage from "./landingPage";
 import InvoiceForm from "./invoiceForm";
+import InvoiceDash from "./invoice/invoiceDash";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/signup" element={<SignUpForm />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/invoiceForm" element={<InvoiceForm />} />
+          <Route path="/invoiceDash" element={<InvoiceDash />} />
           {}
         </Routes>
       </Router>
