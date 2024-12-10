@@ -11,6 +11,9 @@ import Navbar from "./nav";
 import LandingPage from "./landingPage";
 import InvoiceForm from "./invoiceForm";
 import InvoiceDash from "./invoice/invoiceDash";
+import PlannerDashboard from "./planner/plannerDash";
+import TaskList from "./planner/taskList";
+import AnalyticsDashboard from "./planner/analyticsDashboard";
 
 const App = () => {
   return (
@@ -24,6 +27,10 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/invoiceForm" element={<InvoiceForm />} />
           <Route path="/invoiceDash" element={<InvoiceDash />} />
+          <Route path="/plannerDash" element={<PlannerDashboard />} />
+          <Route path="/taskList" element={<TaskList />} />
+          <Route path="/analyticsDashboard" element={<AnalyticsDashboard />} />
+
           {}
         </Routes>
       </Router>

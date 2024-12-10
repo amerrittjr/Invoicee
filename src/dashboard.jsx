@@ -91,7 +91,7 @@ const Dashboard = () => {
         <Link to="/calendar">
           <h3>Calendar</h3>
         </Link>
-        <Link to="/planner">
+        <Link to="/plannerDash">
           <h3>Planner</h3>
         </Link>
         <Link to="/tasks">
