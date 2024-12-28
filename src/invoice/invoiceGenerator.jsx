@@ -1,8 +1,9 @@
 import axios from "axios";
+import { saveInvoiceMetadata } from "./invoiceDataSaveTool";
 
 const BACKEND_API_URL = process.env.REACT_APP_BACKEND_API_URL;
 
-export const generateInvoice = async (invoiceData) => {
+export const generateInvoice = async (invoiceData, userId) => {
   if (!invoiceData?.items?.length || !invoiceData?.to) {
     throw new Error(
       "Invalid invoice data: must include items and customer information"
@@ -10,7 +11,7 @@ export const generateInvoice = async (invoiceData) => {
   }
 
   try {
-    // Send POST request
+    // Send POST request to generate invoice
     const response = await axios.post(BACKEND_API_URL, invoiceData, {
       responseType: "blob", // Ensure binary response for PDFs
       headers: {
@@ -27,6 +28,9 @@ export const generateInvoice = async (invoiceData) => {
     // Create a Blob for the PDF file
     const blob = new Blob([response.data], { type: "application/pdf" });
     console.log(blob);
+
+    // Save invoice metadata to Appwrite
+    saveInvoiceMetadata(invoiceData, userId);
 
     // Create a temporary download link
     const downloadUrl = URL.createObjectURL(blob);

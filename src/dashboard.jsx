@@ -1,16 +1,29 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Client, Account } from "appwrite";
-import "./dashboard.css";
+import { getRecentActivities, getTotalInvoices } from "./api";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Container,
+  Grid,
+  Card,
+  CardContent,
+  Button,
+  Switch,
+  Box,
+  Divider,
+} from "@mui/material";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState({
-    pendingTasks: 0,
     upcomingDeadlines: 0,
     totalInvoices: 0,
   });
+  const [recentActivities, setRecentActivities] = useState([]);
 
   const client = new Client();
   client
@@ -25,19 +38,33 @@ const Dashboard = () => {
         const userDetails = await account.get();
         setUser(userDetails);
         fetchStats();
+        fetchActivities();
       } catch (error) {
         console.log("Error fetching user details:", error);
         navigate("/login");
       }
     };
 
-    const fetchStats = () => {
-      // Mock data; replace with API calls to fetch real stats
-      setStats({
-        pendingTasks: 5, // Replace with API call to fetch task count
-        upcomingDeadlines: 3, // Replace with API call for upcoming deadlines
-        totalInvoices: 12, // Replace with API call for invoice count
-      });
+    const fetchStats = async () => {
+      try {
+        // Fetch total invoices and other stats here
+        const totalInvoices = await getTotalInvoices(user.id);
+        setStats((prevStats) => ({
+          ...prevStats,
+          totalInvoices,
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const fetchActivities = async () => {
+      try {
+        const activities = await getRecentActivities();
+        setRecentActivities(activities);
+      } catch (error) {
+        console.log("Error fetching recent activities:", error);
+      }
     };
 
     fetchUser();
@@ -47,7 +74,6 @@ const Dashboard = () => {
     try {
       await account.deleteSession("current");
       console.log("User signed out");
-      <p>logging out</p>;
       navigate("/login");
     } catch (error) {
       console.log("Error:", error);
@@ -62,79 +88,100 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <h2 className="dashboard-intro">
-        {getTimeGreeting()}, {user ? user.name : "loading..."}!
-      </h2>
+    <div>
+      {/* App Bar */}
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Dashboard
+          </Typography>
+          <Button color="inherit" onClick={handleSignOut}>
+            Sign Out
+          </Button>
+        </Toolbar>
+      </AppBar>
 
-      {/* Quick Stats Section */}
-      <div className="quick-stats">
-        <div className="stat-item">
-          <h3>Pending Tasks</h3>
-          <p>{stats.pendingTasks}</p>
-        </div>
-        <div className="stat-item">
-          <h3>Upcoming Deadlines</h3>
-          <p>{stats.upcomingDeadlines}</p>
-        </div>
-        <div className="stat-item">
-          <h3>Total Invoices</h3>
-          <p>{stats.totalInvoices}</p>
-        </div>
-      </div>
+      {/* Main Content */}
+      <Container sx={{ marginTop: 4 }}>
+        {/* Greeting Section */}
+        <Typography variant="h4" gutterBottom>
+          {getTimeGreeting()}, {user ? user.name : "loading..."}!
+        </Typography>
 
-      {/* Navigation Links */}
-      <div className="dashboard-links">
-        <Link to="/invoiceDash">
-          <h3>Invoices</h3>
-        </Link>
-        <Link to="/calendar">
-          <h3>Calendar</h3>
-        </Link>
-        <Link to="/plannerDash">
-          <h3>Planner</h3>
-        </Link>
-        <Link to="/tasks">
-          <h3>Tasks</h3>
-        </Link>
-        <Link to="/profile">
-          <h3>Profile</h3>
-        </Link>
-      </div>
+        {/* Stats Section */}
+        <Grid container spacing={3} sx={{ marginTop: 2 }}>
+          {[
+            { label: "Upcoming Deadlines", value: stats.upcomingDeadlines },
+            { label: "Total Invoices", value: stats.totalInvoices },
+          ].map((stat, index) => (
+            <Grid item xs={12} sm={6} key={index}>
+              <Card>
+                <CardContent>
+                  <Typography variant="h6" component="div">
+                    {stat.label}
+                  </Typography>
+                  <Typography variant="h4" color="primary">
+                    {stat.value}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
 
-      {/* Recent Activity Section */}
-      <div className="recent-activity">
-        <h3>Recent Activity</h3>
-        <ul>
-          <li>Updated task: "Finish Dashboard Feature"</li>
-          <li>Created a new invoice: #12345</li>
-          <li>Scheduled event: "Team Meeting on Dec 10th"</li>
-        </ul>
-      </div>
+        {/* Navigation Links */}
+        <Box sx={{ marginTop: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Quick Links
+          </Typography>
+          <Divider />
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+            {[
+              { label: "Invoices", link: "/invoiceDash" },
+              { label: "Calendar", link: "/calendar" },
+              { label: "Planner", link: "/plannerDash" },
+            ].map((item, index) => (
+              <Grid item key={index}>
+                <Button
+                  component={Link}
+                  to={item.link}
+                  variant="contained"
+                  color="primary"
+                >
+                  {item.label}
+                </Button>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-      {/* Dark Mode Toggle */}
-      <div className="settings">
-        <label>
-          <input type="checkbox" />
-          Dark Mode
-        </label>
-      </div>
+        {/* Recent Activity Section */}
+        <Box sx={{ marginTop: 4 }}>
+          <Typography variant="h5" gutterBottom>
+            Recent Activity
+          </Typography>
+          <Divider />
+          <Grid container spacing={2} sx={{ marginTop: 2 }}>
+            {recentActivities.map((activity, index) => (
+              <Grid item xs={12} sm={4} key={index}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="body1">
+                      {activity.invoiceData.title}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
 
-      {/* Sign Out Button */}
-      <button
-        onClick={handleSignOut}
-        style={{
-          padding: "10px 20px",
-          fontSize: "14px",
-          color: "#fff",
-          backgroundColor: "red",
-          border: "none",
-          cursor: "pointer",
-          marginTop: "20px",
-        }}
-      >
-        Sign Out
-      </button>
+        {/* Dark Mode Toggle */}
+        <Box sx={{ marginTop: 4, textAlign: "center" }}>
+          <Typography variant="body1">Dark Mode</Typography>
+          <Switch />
+        </Box>
+      </Container>
     </div>
   );
 };
