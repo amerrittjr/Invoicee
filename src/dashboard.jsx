@@ -37,7 +37,7 @@ const Dashboard = () => {
       try {
         const userDetails = await account.get();
         setUser(userDetails);
-        fetchStats();
+        fetchStats(userDetails.Id);
         fetchActivities();
       } catch (error) {
         console.log("Error fetching user details:", error);
@@ -47,7 +47,6 @@ const Dashboard = () => {
 
     const fetchStats = async () => {
       try {
-        // Fetch total invoices and other stats here
         const totalInvoices = await getTotalInvoices(user.id);
         setStats((prevStats) => ({
           ...prevStats,
@@ -167,7 +166,7 @@ const Dashboard = () => {
                 <Card>
                   <CardContent>
                     <Typography variant="body1">
-                      {activity.invoiceData.title}
+                      {activity.invoiceData.to}
                     </Typography>
                   </CardContent>
                 </Card>

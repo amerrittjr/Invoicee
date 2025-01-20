@@ -63,7 +63,7 @@ const InvoiceDash = () => {
         <List>
           {invoices.map((invoice) => (
             <ListItem
-              key={invoice.$id}
+              key={invoice.$Id}
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
@@ -76,7 +76,7 @@ const InvoiceDash = () => {
             >
               <ListItemText
                 primary={invoice.invoiceData.title}
-                secondary={`Due Date: ${invoice.invoiceData.dueDate}`}
+                secondary={`Invoice title: ${invoice.invoiceData.to}`}
               />
               <ListItemIcon>
                 {getStatusDot(invoice.invoiceData.status)}
@@ -101,7 +101,7 @@ const InvoiceDash = () => {
             .filter((invoice) => invoice.invoiceData.status !== "paid")
             .map((invoice) => (
               <ListItem
-                key={invoice.$id}
+                key={invoice.$Id}
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
@@ -158,7 +158,7 @@ const InvoiceDash = () => {
               >
                 <ListItemText
                   primary={receipt.invoiceData.title}
-                  secondary={`Paid Date: ${receipt.invoiceData.paidDate}`}
+                  secondary={`Due Date: ${receipt.invoiceData.due_date}`}
                 />
                 <ListItemIcon>
                   <Done color="success" />
@@ -167,7 +167,7 @@ const InvoiceDash = () => {
             ))
           ) : (
             <Typography variant="body2" color="text.secondary">
-              No paid invoices yet.
+              No invoices yet.
             </Typography>
           )}
         </List>

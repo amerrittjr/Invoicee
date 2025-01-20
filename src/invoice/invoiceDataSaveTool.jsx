@@ -11,11 +11,15 @@ export const saveInvoiceMetadata = async (invoiceData, userId) => {
     await database.createDocument(
       process.env.REACT_APP_APPWRITE_INVOICE_DATABASE_ID,
       process.env.REACT_APP_APPWRITE_INVOICE_COLLECTION_ID,
-      ID.unique(), // Generate a unique ID for the document
+      ID.unique(),
       {
         userId,
         invoiceData: JSON.stringify(invoiceData),
         createdAt: new Date().toISOString(),
+        to: invoiceData.to,
+        from: invoiceData.from,
+        totalAmount: invoiceData.totalAmount,
+        due_date: invoiceData.due_date,
       }
     );
     console.log("Successfully saved your invoice to the cloud");

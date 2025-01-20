@@ -26,7 +26,7 @@ export async function getTotalInvoices(userId) {
   try {
     const response = await databases.listDocuments(
       process.env.REACT_APP_APPWRITE_INVOICE_DATABASE_ID,
-      process.env.REACT_APP_APPWRITE_INVOICE_COLLECTION_ID[`userId=${userId}`]
+      process.env.REACT_APP_APPWRITE_INVOICE_COLLECTION_ID
     );
     return response.total;
   } catch (error) {

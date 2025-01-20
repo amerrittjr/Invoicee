@@ -27,13 +27,16 @@ const InvoiceForm = () => {
     logo: "",
     number: 1,
     date: new Date().toISOString().split("T")[0],
-    due_date: "",
+    due_date: new Date(new Date().setDate(new Date().getDate() + 7))
+      .toISOString()
+      .split("T")[0],
     items: [{ name: "", quantity: 1, unit_cost: 0 }],
     notes: "",
     terms: "",
   });
   const [userId, setUserId] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
+  const [errors, setErrors] = useState({ from: false, to: false });
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -51,6 +54,14 @@ const InvoiceForm = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    if (name === "date") {
+      const newDueDate = new Date(value);
+      newDueDate.setDate(newDueDate.getDate() + 7);
+      setFormData((prev) => ({
+        ...prev,
+        due_date: newDueDate.toISOString().split("T")[0],
+      }));
+    }
   };
 
   const handleItemChange = (index, field, value) => {
@@ -97,6 +108,15 @@ const InvoiceForm = () => {
   };
 
   const handleGenerateInvoice = async () => {
+    const newErrors = {
+      from: !formData.from,
+      to: !formData.to,
+    };
+    setErrors(newErrors);
+
+    if (newErrors.from || newErrors.to) {
+      return;
+    }
     try {
       const { downloadUrl } = await generateInvoice(formData, userId);
       const link = document.createElement("a");
@@ -125,6 +145,8 @@ const InvoiceForm = () => {
               value={formData.from}
               onChange={handleInputChange}
               variant="outlined"
+              error={errors.from}
+              helperText={errors.from ? "Please enter your company info" : ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -135,6 +157,8 @@ const InvoiceForm = () => {
               value={formData.to}
               onChange={handleInputChange}
               variant="outlined"
+              error={errors.to}
+              helperText={errors.to ? "Please enter client info" : ""}
             />
           </Grid>
           <Grid item xs={12} md={6}>
